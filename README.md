@@ -1,6 +1,6 @@
 ## LGF REPORT SYSTEM
 
-Our report system is designed to streamline and manage player reports efficiently. It supports multiple frameworks including QBCore, QBX, LGF, and ESX. The system allows designated groups to access a report panel and enables all players to send reports, which are then logged and processed.
+Simple report System using Ox Library and LGF Utility for Framework Function
 
 ### Configuration
 

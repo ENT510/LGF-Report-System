@@ -16,6 +16,7 @@ Config.allowedGroups       = {
     "mod",
 }
 
+
 -- Type Of Report
 Config.TypeReport          = {
     { label = 'Bug',           value = 'bug' },

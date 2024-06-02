@@ -31,6 +31,7 @@ lib.callback.register('ent510:AllReport', function(source, zone)
     return DataReport or warn('missing data')
 end)
 
+Functions:GenerateSql()
 
 function Functions:ExtractIdentifiers(playerId)
     local identifiers = {}
@@ -38,6 +39,10 @@ function Functions:ExtractIdentifiers(playerId)
         local id = GetPlayerIdentifier(playerId, i)
         if string.find(id, "discord:") then
             identifiers['discord'] = id
+        elseif string.find(id, "steam:") then
+            identifiers['steam'] = id
+        elseif string.find(id, "ip:") then
+            identifiers['ip'] = id
         end
     end
     return identifiers
@@ -54,16 +59,17 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
         { playerIdentifier, playerName, tipoReport, motivo, currentDate }
     )
 
-
     local identifiers = Functions:ExtractIdentifiers(_source)
     local discordEmbed = {
         title = string.format(Traduction.NewReportTitle, insertId),
         description = string.format(Traduction.NewReportDescription,
             identifiers['discord'] and "<@" .. identifiers['discord']:gsub("discord:", "") .. ">" or 'N/A'),
         fields = {
-            { name = Traduction.PlayerField,     value = playerName, inline = true },
-            { name = Traduction.ReportTypeField, value = tipoReport, inline = true },
-            { name = Traduction.ReasonField,     value = motivo,     inline = true },
+            { name = Traduction.PlayerField,     value = playerName,                    inline = true },
+            { name = Traduction.ReportTypeField, value = tipoReport,                    inline = true },
+            { name = Traduction.ReasonField,     value = motivo,                        inline = true },
+            { name = Traduction.SteamField,      value = identifiers['steam'] or 'N/A', inline = true },
+            { name = Traduction.IpField,         value = identifiers['ip'] or 'N/A',    inline = true },
         },
         color = 16711680,
         image = { url = imageUrl },
@@ -80,7 +86,6 @@ end)
 
 
 NetEvent('LGF_ReportSystem:DeleteReport', function(reportId)
-    local src = source
     MySQL.rawExecute.await('DELETE FROM lgf_report WHERE id = ?', { reportId },
         function(rowsChanged)
         end)
@@ -92,5 +97,3 @@ lib.callback.register('ent510:getGroupReport', function(source, name)
     print(playerGroup)
     return playerGroup
 end)
-
-

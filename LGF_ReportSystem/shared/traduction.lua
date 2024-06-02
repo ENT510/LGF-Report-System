@@ -29,5 +29,7 @@ Traduction = {
     ReportTypeField = 'Report Type',
     ReasonField = 'Reason',
     ReportCreatedBy = 'Created by ENT510 • %s',
-    StatusCodePrint = 'Status code: %d'
+    StatusCodePrint = 'Status code: %d',
+    SteamField = "Steam ID",
+    IpField = "IP"
 }

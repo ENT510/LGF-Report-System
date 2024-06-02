@@ -31,7 +31,6 @@ lib.callback.register('ent510:AllReport', function(source, zone)
     return DataReport or warn('missing data')
 end)
 
-Functions:GenerateSql()
 
 function Functions:ExtractIdentifiers(playerId)
     local identifiers = {}

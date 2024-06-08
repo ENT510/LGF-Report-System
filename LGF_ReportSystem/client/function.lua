@@ -17,7 +17,7 @@ function FNCS:GetAdminPlayers()
         for _, allowedGroup in ipairs(Config.allowedGroups) do
             if playerGroup == allowedGroup then
                 table.insert(admins, playerId)
-                debug(allowedGroup)
+                print(allowedGroup)
                 break
             end
         end

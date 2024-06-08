@@ -8,7 +8,7 @@ function debug(...)
                 table.insert(args, i, json.encode(arg, { sort_keys = true, indent = true }))
                 table.remove(args, i + 1)
             else
-                args[i] = '^0' .. tostring(arg) 
+                args[i] = '^0' .. tostring(arg)
             end
         end
 
@@ -16,7 +16,7 @@ function debug(...)
         print(formattedMessage)
 
         if numArgs > 0 then
-            print("^3-------------------------------------^7") 
+            print("^3-------------------------------------^7")
         end
     end
 end

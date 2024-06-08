@@ -8,7 +8,7 @@ version '1.0.0'
 shared_scripts {
     '@ox_lib/init.lua',
     'shared/traduction.lua',
-    'shared/*.lua'
+    'shared/shared.lua',
 }
 
 client_scripts {
@@ -19,4 +19,8 @@ client_scripts {
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'server/server.lua',
+}
+
+files {
+    'shared/core.lua'
 }

@@ -1,6 +1,8 @@
 Functions = {}
 
 local NetEvent = RegisterNetEvent
+local Core = require("shared.core")
+
 
 if Config.RunSql then
     function Functions:GenerateSql()
@@ -31,7 +33,6 @@ lib.callback.register('ent510:AllReport', function(source, zone)
     return DataReport or warn('missing data')
 end)
 
-Functions:GenerateSql()
 
 function Functions:ExtractIdentifiers(playerId)
     local identifiers = {}
@@ -50,8 +51,8 @@ end
 
 NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
     local _source = source
-    local playerIdentifier = exports.LGF_Utility:GetPlayerIdentifier(_source)
-    local playerName = exports.LGF_Utility:GetPlayerName(_source)
+    local playerIdentifier = Core:GetPlayerIdentifier(_source)
+    local playerName = Core:GetPlayerName(_source)
     local currentDate = os.date('%Y-%m-%d %H:%M:%S')
 
     local insertId = MySQL.insert.await(
@@ -84,16 +85,33 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
     end, 'POST', discordEmbedJson, { ['Content-Type'] = 'application/json' })
 end)
 
-
 NetEvent('LGF_ReportSystem:DeleteReport', function(reportId)
     MySQL.rawExecute.await('DELETE FROM lgf_report WHERE id = ?', { reportId },
         function(rowsChanged)
         end)
 end)
 
-
 lib.callback.register('ent510:getGroupReport', function(source, name)
-    local playerGroup = exports.LGF_Utility:GetPlayerGroup(source)
+    local playerGroup =  Core:GetPlayerGroup(source)
     print(playerGroup)
     return playerGroup
+end)
+
+NetEvent('LGF_ReportSystem:SendNotificationAdmin', function()
+    for _, playerId in ipairs(GetPlayers()) do
+        local playerGroup = Core:GetPlayerGroup(playerId)
+        for _, group in ipairs(Config.allowedGroups) do
+            if playerGroup == group then
+                TriggerClientEvent('ox_lib:notify', playerId,
+                    {
+                        icon = 'comments',
+                        title = 'New Report',
+                        position = 'top-right',
+                        description = 'A new report has arrived',
+                        duration = 6000
+                    })
+                break
+            end
+        end
+    end
 end)

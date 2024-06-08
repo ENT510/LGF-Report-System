@@ -2,6 +2,8 @@
 local isCommandAvailable = true
 local cooldownTimer = Config.CoolDownSendReport
 local lastCommandTime = 0
+local Core = require('shared.core')
+
 
 local ServerEvent = TriggerServerEvent
 
@@ -20,7 +22,7 @@ RegisterCommand(Config.CommandSendReport, function(source, args, rawCommand)
     local playerId = source
 
     local activePlayers = GetActivePlayers()
-    local PlayerName = exports.LGF_Utility:GetName()
+    local PlayerName = Core:GetName()
 
     local playerText = Traduction.OnlinePlayersLabel .. ' ' .. tostring(#activePlayers)
 
@@ -55,15 +57,12 @@ RegisterCommand(Config.CommandSendReport, function(source, args, rawCommand)
                 FNCS:Notification(Traduction.NotifyReportSent, Traduction.NotifyReportSent, 'inform',
                     'fa-regular fa-envelope', 'top', playerId)
 
-                local admins = FNCS:GetAdminPlayers()
-                for _, admin in ipairs(admins) do
-                    FNCS:Notification(Traduction.NotifyNewReportReceived, Traduction.NotifyNewReportReceived, 'inform',
-                        'fa-regular fa-envelope', 'top', admin)
-                end
 
-                debug("Screenshot uploaded successfully.")
+                ServerEvent('LGF_ReportSystem:SendNotificationAdmin')
+
+                print("Screenshot uploaded successfully.")
             else
-                debug("Error uploading the screenshot.")
+                print("Error uploading the screenshot.")
             end
         end)
 
@@ -79,7 +78,7 @@ end)
 
 RegisterCommand(Config.CommandPannelReport, function(source, args, rawCommand)
     local playerId = source
-
+print('dwadwa')
     local playerGroup = lib.callback.await('ent510:getGroupReport', playerId)
 
     if FNCS:IsGroupAllowed(playerGroup) then
@@ -110,7 +109,7 @@ RegisterCommand(Config.CommandPannelReport, function(source, args, rawCommand)
                 }
 
                 menuOption.onSelected = function(selected, _, args)
-                    debug("Selected Report:", args.reportId)
+                    print("Selected Report:", args.reportId)
                     local Allert = lib.alertDialog({
                         header = Traduction.ReportDetailsHeader,
                         content = 'ID: ' .. tostring(report.id) .. '                        \n' ..
@@ -128,7 +127,7 @@ RegisterCommand(Config.CommandPannelReport, function(source, args, rawCommand)
 
 
                     if Allert == 'cancel' then
-                        return debug('Report viewing canceled.')
+                        return print('Report viewing canceled.')
                     else
                         local AllertConfirm = lib.alertDialog({
                             header = Traduction.DeleteReportHeader,
@@ -168,6 +167,7 @@ RegisterCommand(Config.CommandPannelReport, function(source, args, rawCommand)
                 'top')
         end
     else
-        FNCS:Notification(Traduction.NoAccessTitle, Traduction.NoAccessMessage, 'warning', "fa-solid fa-triangle-exclamation")
+        FNCS:Notification(Traduction.NoAccessTitle, Traduction.NoAccessMessage, 'warning',
+            "fa-solid fa-triangle-exclamation")
     end
 end)

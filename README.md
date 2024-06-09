@@ -1,6 +1,12 @@
 # LGF REPORT SYSTEM
 
-Simple report System using Ox Library and LGF Utility for Framework Function
+Simple report System using Ox Library
+
+## FRAMEWORK
+
+- LGF
+- QBOX
+- ESX
 
 <table>
   <tr>
@@ -12,8 +18,6 @@ Simple report System using Ox Library and LGF Utility for Framework Function
 
 ### Configuration
 
-- **Debug Mode**: 
-  - Enable or disable debug messages (`Config.DebugEnabled`).
 
 - **Command Panel Report**: 
   - Command to open the report menu for allowed groups (`Config.CommandPannelReport`).
@@ -30,7 +34,7 @@ Simple report System using Ox Library and LGF Utility for Framework Function
 ### Allowed Groups for Report Panel
 
 - **Config.allowedGroups**: 
-  - Only users in these groups ("admin", "mod") or others can access the report panel. (For QBX, currently only works if the permission of the player admin is `admin = true`)
+  - Only users in these groups ("admin", "mod") or others can access the report panel[qbox work with 'admin' ace perms)
 
 ### Report Types
 

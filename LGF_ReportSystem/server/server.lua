@@ -48,9 +48,9 @@ function Functions:ExtractIdentifiers(playerId)
 end
 
 NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
-    local _source = source
-    local playerIdentifier = Core:GetPlayerIdentifier(_source)
-    local playerName = Core:GetPlayerName(_source)
+    local src = source
+    local playerIdentifier = Core:GetPlayerIdentifier(src)
+    local playerName = Core:GetPlayerName(src)
     local currentDate = os.date('%Y-%m-%d %H:%M:%S')
 
     local insertId = MySQL.insert.await(
@@ -58,7 +58,7 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
         { playerIdentifier, playerName, tipoReport, motivo, currentDate }
     )
 
-    local identifiers = Functions:ExtractIdentifiers(_source)
+    local identifiers = Functions:ExtractIdentifiers(src)
     local discordEmbed = {
         title = string.format(Traduction.NewReportTitle, insertId),
         description = string.format(Traduction.NewReportDescription,
@@ -67,7 +67,7 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
             { name = Traduction.PlayerField,     value = playerName,                 inline = true },
             { name = Traduction.ReportTypeField, value = tipoReport,                 inline = true },
             { name = Traduction.ReasonField,     value = motivo,                     inline = true },
-            { name = Traduction.LicenseField,    value = playerIdentifier or 'N/A',  inline = true },
+            { name = Traduction.LicenseField,    value = playerIdentifier,           inline = true },
             { name = Traduction.IpField,         value = identifiers['ip'] or 'N/A', inline = true },
         },
         color = 16711680,

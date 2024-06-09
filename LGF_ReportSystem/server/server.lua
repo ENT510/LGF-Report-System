@@ -69,7 +69,7 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
             { name = Traduction.PlayerField,     value = playerName,                    inline = true },
             { name = Traduction.ReportTypeField, value = tipoReport,                    inline = true },
             { name = Traduction.ReasonField,     value = motivo,                        inline = true },
-            { name = Traduction.SteamField,      value = identifiers['steam'] or 'N/A', inline = true },
+            { name = Traduction.LicenseField,      value = Core:GetPlayerIdentifier(_source) or 'N/A', inline = true },
             { name = Traduction.IpField,         value = identifiers['ip'] or 'N/A',    inline = true },
         },
         color = 16711680,

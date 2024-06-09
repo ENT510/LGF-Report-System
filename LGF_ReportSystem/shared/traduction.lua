@@ -30,6 +30,6 @@ Traduction = {
     ReasonField = 'Reason',
     ReportCreatedBy = 'Created by ENT510 • %s',
     StatusCodePrint = 'Status code: %d',
-    SteamField = "Steam ID",
+    LicenseField = "License: ",
     IpField = "IP"
 }

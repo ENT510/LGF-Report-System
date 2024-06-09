@@ -8,6 +8,7 @@ local CitWait = Citizen.Await
 
 if GetResourceState("LegacyFramework") ~= "missing" then
     Core = "LegacyFramework"
+    LGF = exports.LegacyFramework:ReturnFramework()
     GetCore:resolve({ "LegacyFramework", "ReturnFramework" })
 elseif GetResourceState("es_extended") ~= "missing" then
     Core = "es_extended"
@@ -19,7 +20,6 @@ else
     GetCore:reject("Could not find a framework!")
     return
 end
-
 local Object = table.unpack(CitWait(GetCore))
 
 if Path == 'client' then
@@ -42,7 +42,7 @@ end
 if Path == 'server' then
     function Shared:GetPlayerIdentifier(src)
         if Core == 'LegacyFramework' then
-            return Object.SvPlayerFunctions.GetPlayerData(src)[1].charName
+            return LGF.SvPlayerFunctions.GetPlayerData(src)[1].charName
         elseif Core == 'es_extended' then
             return Object.GetIdentifier(src)
         elseif Core == 'qbx_core' then
@@ -53,7 +53,7 @@ if Path == 'server' then
 
     function Shared:GetPlayerName(src)
         if Core == 'LegacyFramework' then
-            local PlayerData = Object.SvPlayerFunctions.GetPlayerData(src)[1]
+            local PlayerData = LGF.SvPlayerFunctions.GetPlayerData(src)[1]
             return string.format("%s %s", PlayerData.firstName, PlayerData.lastName)
         elseif Core == 'es_extended' then
             local xPlayer = Object.GetPlayerFromId(src)
@@ -66,7 +66,7 @@ if Path == 'server' then
 
     function Shared:GetPlayerGroup(src)
         if Core == 'LegacyFramework' then
-            return Object.SvPlayerFunctions.GetPlayerData(src)[1].playerGroup
+            return LGF.SvPlayerFunctions.GetPlayerData(src)[1].playerGroup
         elseif Core == 'es_extended' then
             return Object.GetPlayerFromId(src).getGroup()
         elseif Core == 'qbx_core' then

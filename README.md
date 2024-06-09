@@ -10,7 +10,6 @@ Simple report System using Ox Library and LGF Utility for Framework Function
   </tr>
 </table>
 
-
 ### Configuration
 
 - **Debug Mode**: 
@@ -42,9 +41,6 @@ Simple report System using Ox Library and LGF Utility for Framework Function
     - **Information** (`label = 'Information', value = 'information'`)
 
 ### Dependencies
-
-- **LGF UTILITY**: 
-  - Required utility for various framework functions.
 
 - **OX LIB**: 
   - Essential library for extended functionalities. [OX LIB](https://github.com/overextended/ox_lib)

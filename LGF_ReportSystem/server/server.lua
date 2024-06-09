@@ -1,6 +1,7 @@
 Functions = {}
 
 local NetEvent = RegisterNetEvent
+local TriggerClient = TriggerClientEvent
 local Core = require("shared.core")
 
 function Functions:GenerateSql()
@@ -100,7 +101,7 @@ NetEvent('LGF_ReportSystem:SendNotificationAdmin', function()
         local playerGroup = Core:GetPlayerGroup(playerId)
         for _, group in ipairs(Config.allowedGroups) do
             if playerGroup == group then
-                TriggerClientEvent('ox_lib:notify', playerId,
+                TriggerClient('ox_lib:notify', playerId,
                     {
                         icon = 'comments',
                         title = 'New Report',

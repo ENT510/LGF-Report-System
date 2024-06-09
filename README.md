@@ -34,7 +34,7 @@ Simple report System using Ox Library
 ### Allowed Groups for Report Panel
 
 - **Config.allowedGroups**: 
-  - Only users in these groups ("admin", "mod") or others can access the report panel[qbox work with 'admin' 'ace perms']
+  - Only users in these groups (`admin`, `mod`) or others can access the report panel (qbox work with `admin` `ace perms`)
 
 ### Report Types
 

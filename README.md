@@ -52,4 +52,3 @@ Simple report System using Ox Library
 - **SCREENSHOT-BASIC**: 
   - Needed for capturing and sending screenshots with reports. [SCREENSHOT-BASIC](https://github.com/citizenfx/screenshot-basic)
 
-This system integrates seamlessly with QBCore, QBX, LGF, and ESX frameworks, ensuring comprehensive support and functionality across different environments.

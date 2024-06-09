@@ -3,14 +3,12 @@ Functions = {}
 local NetEvent = RegisterNetEvent
 local Core = require("shared.core")
 
-
-if Config.RunSql then
-    function Functions:GenerateSql()
-        local result = MySQL.query.await('SHOW TABLES LIKE ?', { 'lgf_report' })
-        if #result > 0 then
-            print("The [^4lgf_report^7] table already exists in the database")
-        else
-            MySQL.query([[
+function Functions:GenerateSql()
+    local result = MySQL.query.await('SHOW TABLES LIKE ?', { 'lgf_report' })
+    if #result > 0 then
+        print("The [^4lgf_report^7] table already exists in the database")
+    else
+        MySQL.query([[
                 CREATE TABLE IF NOT EXISTS `lgf_report` (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
                     `identifier` varchar(255) NOT NULL,
@@ -21,11 +19,13 @@ if Config.RunSql then
                     PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             ]])
-            print("The [^4lgf_report^7] table has been created in the database")
-        end
+        print("The [^4lgf_report^7] table has been created in the database")
     end
 end
 
+if Config.RunSql then
+    Functions:GenerateSql()
+end
 
 
 lib.callback.register('ent510:AllReport', function(source, zone)
@@ -40,8 +40,6 @@ function Functions:ExtractIdentifiers(playerId)
         local id = GetPlayerIdentifier(playerId, i)
         if string.find(id, "discord:") then
             identifiers['discord'] = id
-        elseif string.find(id, "steam:") then
-            identifiers['steam'] = id
         elseif string.find(id, "ip:") then
             identifiers['ip'] = id
         end
@@ -66,11 +64,11 @@ NetEvent('ent510:sendReport', function(tipoReport, motivo, imageUrl)
         description = string.format(Traduction.NewReportDescription,
             identifiers['discord'] and "<@" .. identifiers['discord']:gsub("discord:", "") .. ">" or 'N/A'),
         fields = {
-            { name = Traduction.PlayerField,     value = playerName,                    inline = true },
-            { name = Traduction.ReportTypeField, value = tipoReport,                    inline = true },
-            { name = Traduction.ReasonField,     value = motivo,                        inline = true },
-            { name = Traduction.LicenseField,      value = Core:GetPlayerIdentifier(_source) or 'N/A', inline = true },
-            { name = Traduction.IpField,         value = identifiers['ip'] or 'N/A',    inline = true },
+            { name = Traduction.PlayerField,     value = playerName,                 inline = true },
+            { name = Traduction.ReportTypeField, value = tipoReport,                 inline = true },
+            { name = Traduction.ReasonField,     value = motivo,                     inline = true },
+            { name = Traduction.LicenseField,    value = playerIdentifier or 'N/A',  inline = true },
+            { name = Traduction.IpField,         value = identifiers['ip'] or 'N/A', inline = true },
         },
         color = 16711680,
         image = { url = imageUrl },
@@ -92,7 +90,7 @@ NetEvent('LGF_ReportSystem:DeleteReport', function(reportId)
 end)
 
 lib.callback.register('ent510:getGroupReport', function(source, name)
-    local playerGroup =  Core:GetPlayerGroup(source)
+    local playerGroup = Core:GetPlayerGroup(source)
     print(playerGroup)
     return playerGroup
 end)

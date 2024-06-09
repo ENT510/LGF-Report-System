@@ -12,6 +12,7 @@ if GetResourceState("LegacyFramework") ~= "missing" then
     GetCore:resolve({ "LegacyFramework", "ReturnFramework" })
 elseif GetResourceState("es_extended") ~= "missing" then
     Core = "es_extended"
+    ESX = exports['es_extended']:getSharedObject()
     GetCore:resolve({ "es_extended", "getSharedObject" })
 elseif GetResourceState("qb-core") ~= "missing" then
     Core = "qbx_core"
@@ -29,8 +30,8 @@ if Path == 'client' then
             local lastName = LocalPlayer.state.playerData[1].lastName
             return string.format("%s %s", firstName, lastName)
         elseif Core == 'es_extended' then
-            local firstName = Object.GetPlayerData().firstName
-            local lastName = Object.GetPlayerData().lastName
+            local firstName = ESX.GetPlayerData().firstName
+            local lastName = ESX.GetPlayerData().lastName
             return string.format("%s %s", firstName, lastName)
         elseif Core == 'qbx_core' then
             local Player = exports.qbx_core:GetPlayerData()
@@ -44,7 +45,7 @@ if Path == 'server' then
         if Core == 'LegacyFramework' then
             return LGF.SvPlayerFunctions.GetPlayerData(src)[1].charName
         elseif Core == 'es_extended' then
-            return Object.GetIdentifier(src)
+            return ESX.GetIdentifier(src)
         elseif Core == 'qbx_core' then
             local PlayerData = exports.qbx_core:GetPlayer(src).PlayerData
             return PlayerData.license
@@ -56,7 +57,7 @@ if Path == 'server' then
             local PlayerData = LGF.SvPlayerFunctions.GetPlayerData(src)[1]
             return string.format("%s %s", PlayerData.firstName, PlayerData.lastName)
         elseif Core == 'es_extended' then
-            local xPlayer = Object.GetPlayerFromId(src)
+            local xPlayer = ESX.GetPlayerFromId(src)
             return string.format("%s %s", xPlayer.get("firstName"), xPlayer.get("lastName"))
         elseif Core == 'qbx_core' then
             local QbPlayer = exports.qbx_core:GetPlayer(src).PlayerData
@@ -68,7 +69,7 @@ if Path == 'server' then
         if Core == 'LegacyFramework' then
             return LGF.SvPlayerFunctions.GetPlayerData(src)[1].playerGroup
         elseif Core == 'es_extended' then
-            return Object.GetPlayerFromId(src).getGroup()
+            return ESX.GetPlayerFromId(src).getGroup()
         elseif Core == 'qbx_core' then
             if IsPlayerAceAllowed(src, 'admin') then
                 return 'admin'

@@ -4,7 +4,7 @@ Config = {}
 Config.DebugEnabled        = false        -- Print Server/Client side
 Config.CommandPannelReport = 'reportmenu' -- Command only for allowedGroups
 Config.CommandSendReport   = 'report'     -- Command for send report
-Config.WebhookReportScreen = 'https://discord.com/api/webhooks/1217899692982276228/lbg44jw4gYA8ykW5n8qL8RDUJHZFDWvPPysVNuuVasJgmFRkKjpAA9mdDbnWoGBRdqlQ' -- Screen with data report
+Config.WebhookReportScreen = '' -- Screen with data report
 Config.CoolDownSendReport  = 15 -- Cooldown between one report and another
 Config.RunSql              = true -- Create Sql table for register Report
 

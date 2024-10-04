@@ -46,7 +46,7 @@ RegisterCommand(Config.CommandSendReport, function(source, args, rawCommand)
     local reason = report[2]
 
     exports['screenshot-basic']:requestScreenshotUpload(
-        'https://discord.com/api/webhooks/1216562567955087502/Yhi_d2s7VcaCxFjI9hnMaVcVodssSGmpxFQae1xrGP7MFbrLmL4iOQb3x69fqOim0ObY',
+       Config.WebhookReportScreen,
         'files[]', function(data)
             local resp = json.decode(data)
 
